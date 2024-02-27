@@ -15,10 +15,10 @@ function Customtimeline() {
 
   const fetchRoomDetails = async () => {
     try {
-      const result = await axios("http://localhost:8000/rooms");
-      // const result = await axios(
-      //   "https://advance-booking-api-production.up.railway.app/rooms"
-      // );
+      // const result = await axios("http://localhost:8000/rooms");
+      const result = await axios(
+        "https://advance-booking-api.onrender.com/rooms"
+      );
 
       const formattedData = result.data.map((room, index) => ({
         id: room.room_no,
