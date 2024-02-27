@@ -13,7 +13,7 @@ function App() {
   return (
     <div className="App">
       <div className="headerCol">
-        {/* <div className="calenderButton">
+        <div className="calenderButton">
           <button
             onClick={() => {
               calenderSetModalOpen(true);
@@ -21,7 +21,7 @@ function App() {
           >
             Calender
           </button>
-        </div> */}
+        </div>
         <div className="bookingButton">
           <button
             onClick={() => {
