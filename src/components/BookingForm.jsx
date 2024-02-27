@@ -36,7 +36,7 @@ const BookingForm = ({ setOpenModal }) => {
         };
 
         console.log(formData);
-        fetch("http://localhost:8000/create", {
+        fetch("https://advance-booking-api.onrender.com/create", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

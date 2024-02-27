@@ -32,10 +32,10 @@ function Customtimeline() {
 
   const fetchAdvanceBookings = async () => {
     try {
-      const result = await axios("http://localhost:8000/advancebookings");
-      // const result = await axios(
-      //   "https://advance-booking-api-production.up.railway.app/advancebookings"
-      // );
+      // const result = await axios("http://localhost:8000/advancebookings");
+      const result = await axios(
+        "https://advance-booking-api.onrender.com/advancebookings"
+      );
 
       setAdvanceBookings(result.data);
     } catch (err) {
