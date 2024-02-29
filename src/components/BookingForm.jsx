@@ -56,8 +56,9 @@ const BookingForm = ({ setOpenModal }) => {
               alertMessage += "Booking ID: " + data.bookingId + "\n";
             }
             alertMessage += data.msg;
-            alert("\n" + alertMessage);
+            alert(alertMessage);
             console.log("Success:", data);
+            window.location.reload(); //reload the window, to diplay new timeline
           })
           .catch((error) => {
             alert("Error: " + error.message);
@@ -97,7 +98,7 @@ const BookingForm = ({ setOpenModal }) => {
           ]}
           style={{ fontFamily: "Arial, sans-serif", fontSize: "16px" }}
         >
-          <Input name="name" label="User name" />
+          <Input name="name" label="Name" />
           <Input name="mobile_no." label="Mobile no." />
           <Input name="email" type="email" label="E-mail" />
           <Select
