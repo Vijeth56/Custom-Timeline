@@ -50,16 +50,26 @@ const BookingForm = ({ setOpenModal }) => {
             return response.json();
           })
           .then((data) => {
+            // alert("Booking ID: " + data.bookingId + "\n" + data.msg);
+            let alertMessage = "";
+            if (data.bookingId) {
+              alertMessage += "Booking ID: " + data.bookingId + "\n";
+            }
+            alertMessage += data.msg;
+            alert("\n" + alertMessage);
             console.log("Success:", data);
           })
           .catch((error) => {
+            alert("Error: " + error.message);
             console.error("Error:", error);
           });
       } else {
-        console.error("End Date must be after Start Date");
+        alert("End Date must be after Start Date");
+        // console.error("End Date must be after Start Date");
       }
     } else {
-      console.error("Please select both Start Date and End Date");
+      alert("Please select both Start Date and End Date");
+      // console.error("Please select both Start Date and End Date");
     }
 
     setOpenModal(false);
