@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Timeline from "react-calendar-timeline";
+import Modal from "./Modal";
+import UpdateBooking from "./UpdateBookingForm";
 import "react-calendar-timeline/lib/Timeline.css";
 import moment from "moment";
 
 function Customtimeline() {
   const [roomDetails, setRoomDetails] = useState([]);
   const [advanceBookings, setAdvanceBookings] = useState([]);
+  const [selectedBooking, setSelectedBooking] = useState(null);
 
   useEffect(() => {
     fetchRoomDetails();
@@ -22,7 +25,7 @@ function Customtimeline() {
 
       const formattedData = result.data.map((room, index) => ({
         id: room.room_no,
-        title: `Room ${room.room_no}`,
+        title: room.description,
       }));
       setRoomDetails(formattedData);
     } catch (err) {
@@ -43,10 +46,14 @@ function Customtimeline() {
     }
   };
 
+  const closeModal = () => {
+    setSelectedBooking(null);
+  };
+
   const groups = roomDetails;
 
   // console.log(advanceBookings);
-  const fD = advanceBookings.map((item, index) => ({
+  const items = advanceBookings.map((item, index) => ({
     id: item.adv_booking_id,
     group: item.room_no,
     title: item.name,
@@ -58,7 +65,6 @@ function Customtimeline() {
       .subtract(30, "minutes"),
     // start_time: moment(item.booking_start),
     // end_time: moment(item.booking_end),
-
     canMove: false,
     canResize: false,
     canChangeGroup: false,
@@ -74,15 +80,18 @@ function Customtimeline() {
         if (Object.keys(roomInfo).length === 0)
           alert("No additional details found.");
         else {
-          const formattedData = `Name: ${roomInfo.name}\nMobile No: ${
-            roomInfo.mobile_no
-          }\nEmail Address: ${
-            roomInfo.email_address
-          }\nBooking Start: ${formatDate(
-            roomInfo.booking_start
-          )}\nBooking End: ${formatDate(roomInfo.booking_end)}\nRoom No: ${
-            roomInfo.room_no
-          }\nRoom Type: ${roomInfo.room_type}`;
+          const formattedData = {
+            advBookingId: roomInfo.adv_booking_id,
+            name: roomInfo.name,
+            mobileNo: roomInfo.mobile_no,
+            emailAddress: roomInfo.email_address,
+            // bookingStart: formatDate(roomInfo.booking_start),
+            // bookingEnd: formatDate(roomInfo.booking_end),
+            bookingStart: roomInfo.booking_start,
+            bookingEnd: roomInfo.booking_end,
+            roomNo: roomInfo.room_no,
+            roomType: roomInfo.room_type,
+          };
 
           function formatDate(inputDate) {
             const date = new Date(inputDate);
@@ -97,20 +106,51 @@ function Customtimeline() {
               hour12: true,
             });
           }
-          // const formattedData = `Name: ${roomInfo.name}\nMobile No: ${roomInfo.mobile_no}\nEmail Address: ${roomInfo.email_address}\nBooking Start: ${roomInfo.booking_start}\nBooking End: ${roomInfo.booking_end}\nRoom No: ${roomInfo.room_no}\nRoom Type: ${roomInfo.room_type}`;
-          alert(formattedData);
+          // alert(formattedData);
+          // console.log(formattedData);
+          setSelectedBooking(formattedData);
         }
       },
     },
   }));
 
-  // console.log(fD);
-  const items = fD;
+  useEffect(() => {
+    // console.log(selectedBooking);
+  }, [selectedBooking]);
 
   // -5:30
 
+  const [formData, setFormData] = useState({
+    name: "",
+  });
+
+  useEffect(() => {
+    if (selectedBooking) {
+      setFormData({
+        name: selectedBooking.name || "",
+        mobileNo: selectedBooking.mobileNo || null,
+      });
+    }
+  }, [selectedBooking]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
   return (
     <div className="App">
+      {selectedBooking && (
+        <Modal setOpenModal={closeModal}>
+          <UpdateBooking
+            selectedBooking={selectedBooking}
+            closeModal={closeModal}
+          />
+        </Modal>
+      )}
       <Timeline
         groups={groups}
         items={items}

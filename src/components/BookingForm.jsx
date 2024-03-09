@@ -35,7 +35,7 @@ const BookingForm = ({ setOpenModal }) => {
             .toISOString(),
         };
 
-        console.log(formData);
+        // console.log(formData);
         fetch("https://advance-booking-api.onrender.com/create", {
           method: "POST",
           headers: {
@@ -115,7 +115,7 @@ const BookingForm = ({ setOpenModal }) => {
             ]}
           />
           <Input name="no_of_rooms" label="No. of Rooms" />
-          <Input name="room_no." label="Room no." />
+          {/* <Input name="room_no." label="Room no." /> */}
           <div
             style={{
               display: "flex",
