@@ -81,6 +81,7 @@ function Customtimeline() {
           alert("No additional details found.");
         else {
           const formattedData = {
+            checkedIn: roomInfo.checked_in,
             advBookingId: roomInfo.adv_booking_id,
             name: roomInfo.name,
             mobileNo: roomInfo.mobile_no,

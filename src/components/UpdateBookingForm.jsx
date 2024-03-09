@@ -6,9 +6,6 @@ import dayjs from "dayjs";
 import moment from "moment";
 
 function UpdateBooking({ selectedBooking, closeModal }) {
-  const [startDateValue, setStartDateValue] = useState(null);
-  const [endDateValue, setEndDateValue] = useState(null);
-
   const [bookingStart, setBookingStart] = useState(
     selectedBooking.bookingStart
       ? moment(selectedBooking.bookingStart)
@@ -58,6 +55,7 @@ function UpdateBooking({ selectedBooking, closeModal }) {
         })
         .then((data) => {
           alert(`Room No: ${roomNo} - Checked In updated!`);
+          window.location.reload();
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -73,6 +71,7 @@ function UpdateBooking({ selectedBooking, closeModal }) {
   async function handleInfoUpdate(e) {
     if (selectedBooking) {
       const updatedBooking = {
+        status: selectedBooking.checked_in,
         adv_booking_id: selectedBooking.advBookingId,
         name: name,
         mobile_no: mobileNo,
@@ -145,6 +144,24 @@ function UpdateBooking({ selectedBooking, closeModal }) {
               onSubmit={handleInfoUpdate}
               style={{ width: "400px", margin: "0 auto", textAlign: "center" }}
             >
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <div
+                  style={{
+                    width: "125px",
+                    padding: "10px",
+                    // border: "1px solid black",
+                    textAlign: "center",
+                    fontWeight: "bold",
+                    backgroundColor: selectedBooking.checkedIn
+                      ? "green"
+                      : "red",
+                    color: "white",
+                  }}
+                >
+                  {selectedBooking.checkedIn ? "Checked-In" : "Not Checked-In"}
+                </div>
+              </div>
+
               <div style={{ marginBottom: "10px", textAlign: "left" }}>
                 <label htmlFor="name">Name:</label>
                 <br />
