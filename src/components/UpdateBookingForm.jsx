@@ -42,6 +42,8 @@ function UpdateBooking({ selectedBooking, closeModal }) {
       const roomNo = selectedBooking.roomNo;
       const updatedBooking = {
         adv_booking_id: advBookingId,
+        address: address,
+        city: city,
         checkedIn: true,
       };
       fetch("https://advance-booking-api.onrender.com/update", {
