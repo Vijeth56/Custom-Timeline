@@ -39,7 +39,7 @@ function Customtimeline() {
       const result = await axios(
         "https://advance-booking-api.onrender.com/advancebookings"
       );
-
+      console.log(result.data);
       setAdvanceBookings(result.data);
     } catch (err) {
       console.error(err);
@@ -86,12 +86,12 @@ function Customtimeline() {
             name: roomInfo.name,
             mobileNo: roomInfo.mobile_no,
             emailAddress: roomInfo.email_address,
-            // bookingStart: formatDate(roomInfo.booking_start),
-            // bookingEnd: formatDate(roomInfo.booking_end),
             bookingStart: roomInfo.booking_start,
             bookingEnd: roomInfo.booking_end,
             roomNo: roomInfo.room_no,
             roomType: roomInfo.room_type,
+            address: roomInfo.booking_address,
+            city: roomInfo.booking_city,
           };
 
           function formatDate(inputDate) {
@@ -120,27 +120,6 @@ function Customtimeline() {
   }, [selectedBooking]);
 
   // -5:30
-
-  const [formData, setFormData] = useState({
-    name: "",
-  });
-
-  useEffect(() => {
-    if (selectedBooking) {
-      setFormData({
-        name: selectedBooking.name || "",
-        mobileNo: selectedBooking.mobileNo || null,
-      });
-    }
-  }, [selectedBooking]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
 
   return (
     <div className="App">

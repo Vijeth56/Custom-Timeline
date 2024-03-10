@@ -31,6 +31,10 @@ function UpdateBooking({ selectedBooking, closeModal }) {
   );
   const [roomNo, setRoomNo] = useState(selectedBooking.roomNo);
   const [roomType, setRoomType] = useState(selectedBooking.roomType);
+  const [address, setAddress] = useState(selectedBooking.address);
+  const [city, setCity] = useState(selectedBooking.city);
+  console.log(selectedBooking);
+  console.log(address);
 
   async function handleCheckIn() {
     if (selectedBooking) {
@@ -79,6 +83,8 @@ function UpdateBooking({ selectedBooking, closeModal }) {
 
         // start_date: startDateValue,
         // end_date: endDateValue,
+        address: address,
+        city: city,
         room_no: roomNo,
         room_type: roomType,
         start_date: moment(bookingStart)
@@ -93,6 +99,7 @@ function UpdateBooking({ selectedBooking, closeModal }) {
 
       // console.log(updatedBooking);
       fetch("https://advance-booking-api.onrender.com/update", {
+        // fetch("http://localhost:8000/update", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -196,30 +203,30 @@ function UpdateBooking({ selectedBooking, closeModal }) {
                 />
               </div>
               <div style={{ marginBottom: "10px", textAlign: "left" }}>
-                <label htmlFor="bookingStart">Booking Start:</label>
+                <label htmlFor="bookingStart">Address:</label>
                 <br />
                 <input
                   type="text"
-                  id="bookingStart"
-                  value={bookingStart}
-                  onChange={(e) => setBookingStart(e.target.value)}
+                  id="address"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
                   style={{ width: "90%" }}
-                  disabled
+                  required
                 />
               </div>
               <div style={{ marginBottom: "10px", textAlign: "left" }}>
-                <label htmlFor="bookingEnd">Booking End:</label>
+                <label htmlFor="bookingEnd">City:</label>
                 <br />
                 <input
                   type="text"
-                  id="bookingEnd"
-                  value={bookingEnd}
-                  onChange={(e) => setBookingEnd(e.target.value)}
+                  id="city"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
                   style={{ width: "90%" }}
-                  disabled
+                  required
                 />
               </div>
-              <div style={{ marginBottom: "10px", textAlign: "left" }}>
+              {/* <div style={{ marginBottom: "10px", textAlign: "left" }}>
                 <label htmlFor="roomNo">Room No:</label>
                 <br />
                 <input
@@ -229,7 +236,7 @@ function UpdateBooking({ selectedBooking, closeModal }) {
                   onChange={(e) => setRoomNo(e.target.value)}
                   style={{ width: "90%" }}
                 />
-              </div>
+              </div> */}
               <div style={{ marginBottom: "10px", textAlign: "left" }}>
                 <label htmlFor="roomType">Room Type:</label>
                 <br />
@@ -257,6 +264,8 @@ function UpdateBooking({ selectedBooking, closeModal }) {
                   display: "flex",
                   flexDirection: "row",
                   alignItems: "center",
+                  marginTop: "15px",
+                  marginBottom: "10px",
                 }}
               >
                 <div style={{ marginRight: "10px" }}>
